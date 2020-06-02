@@ -3,6 +3,7 @@ package sdk
 import (
 	"crypto/cipher"
 	"encoding/base64"
+	"os"
 	"strings"
 
 	"golang.org/x/crypto/blowfish"
@@ -49,8 +50,8 @@ func EncryptToByte(value string, cipherKey string) ([]byte, error) {
 }
 
 // EncryptToString : value, cipherKey
-func EncryptToString(value string, cipherKey string) (string, error) {
-
+func EncryptToString(value string) (string, error) {
+	cipherKey := os.Getenv("WALLET_CIPHER_KEY")
 	if cipherKey == "" {
 		return value, nil
 	}
@@ -102,7 +103,9 @@ func DecryptToByte(value string, cipherKey string) ([]byte, error) {
 }
 
 // DecryptToString : value, cipherKey
-func DecryptToString(value string, cipherKey string) (string, error) {
+func DecryptToString(value string) (string, error) {
+
+	cipherKey := os.Getenv("WALLET_CIPHER_KEY")
 
 	if cipherKey == "" {
 		return value, nil
